@@ -5,4 +5,4 @@ https://www.alphavantage.co
 
 https://finnhub.io/
 
-And attempts to create a signal which could be used to invest.
+It uses a server client architecture to try and create a signal generator that could be used to invest on.
