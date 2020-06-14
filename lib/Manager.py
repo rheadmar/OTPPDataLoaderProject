@@ -17,10 +17,9 @@ class Manager():
     def __init__(self,overrides):
         self.stparams = overrides
         self.dataHandlers = {}
-        self.conf = configHandler("C:\\Users\\Rowan\\Documents\\Python Workbooks\\OTTPCodeFiles\\project\\conf\\server.conf")
-        self.provider = finhubSubscirption(self.processUpdate,self.conf.config['KEYS']['finhubKey'], self.getSubscirbeStringSet())
-        #self.provider = finhubSubscirption(print,self.conf.config['KEYS']['finhubKey'], self.getSubscirbeStringSet())
+        self.conf = configHandler("conf\\server.conf")
         self.conf.applyOverides(overrides)
+        self.provider = finhubSubscirption(self.processUpdate,self.conf.config['KEYS']['finhubKey'], self.getSubscirbeStringSet())
         self.ts = TimeSeries(self.conf.config['KEYS']['alphaVantageKey'])
         for i in self.conf.tickers:
             self.dataHandlers[i] = dataHandler(i,self.conf,self.ts)
@@ -50,20 +49,22 @@ class Manager():
         return json.dumps("0")
     
     def addTicker(self, ticker):
-        #TODO:checkValidity
-        if ticker in self.dataHandlers.keys():
-            return json.dumps("1")
-        self.conf.tickers.append(ticker)
-        self.dataHandlers[ticker]=dataHandler(ticker,self.conf,self.ts)
-        self.provider.add_subscription(ticker)
-        return json.dumps("0")
-    
+        try:
+            if ticker in self.dataHandlers.keys():
+                return json.dumps(1)
+            self.conf.tickers.append(ticker)
+            self.dataHandlers[ticker]=dataHandler(ticker,self.conf,self.ts)
+            self.provider.add_subscription(ticker)
+            return json.dumps(0)
+        except:
+            return json.dumps(2)
+
     def delTicker(self, ticker):
         if not ticker in self.conf.tickers:
-            return json.dumps("1")
+            return json.dumps(1)
         self.dataHandlers.pop(ticker)
         self.conf.tickers.remove(ticker)
-        return json.dumps("0")
+        return json.dumps(0)
     
     def getPrices(self, datetime):
         return pandas.concat(map(lambda x: x.getPrice(datetime),self.dataHandlers.values())).to_json()

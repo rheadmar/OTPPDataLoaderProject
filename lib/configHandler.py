@@ -17,7 +17,15 @@ class configHandler():
     def applyOverides(self, overides):
         for i in overides.keys():
             if i == "tickers":
-                self.tickers = i
-            else:
-                self.__dict__[i]=overides[i]
+                self.tickers = eval(i)
+            elif i == 'loadinterval':
+                self.inter = int(overides[i])
+                self.intervalString = str(self.inter) + "min"
+            elif i == 'loadfile':
+                self.loadFile=overides[i]
+                self.loadFromFile = True
+            elif i == "port":
+                self.config['SERVERPROPERTY']['port']=overides[i]
+                self.port = overides[i]
+                self.requestPort = overides[i]
         
