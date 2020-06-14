@@ -14,6 +14,7 @@ setting up an environment for conda should involve running some commands that lo
 
 <code>
   conda create --name myenv --file env.yml
+  
   activate myenv
  </code>
 
