@@ -13,7 +13,7 @@ This uses the anaconda packages for environment management found here: https://a
 setting up an environment for conda should involve running some commands that look like the follwoing:
 
 <code>
-  conda create --name myenv --file env.yml
+  conda env create --name myenv --file env.yml
   
   activate myenv
  </code>
