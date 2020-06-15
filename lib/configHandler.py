@@ -18,7 +18,7 @@ class configHandler():
         for i in overides.keys():
             if not overides[i] is None:
                 if i == "tickers":
-                    self.tickers = eval(i)
+                    self.tickers = eval(overides[i])
                 elif i == 'loadinterval':
                     self.inter = int(overides[i])
                     self.intervalString = str(self.inter) + "min"
