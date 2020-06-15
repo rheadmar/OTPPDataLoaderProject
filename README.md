@@ -13,12 +13,14 @@ This uses the anaconda packages for environment management found here: https://a
 setting up an environment for conda should involve running some commands that look like the follwoing:
 
 <code>
-  conda create --name myenv --file env.yml
+  conda env create --name myenv --file env.yml
   
   activate myenv
  </code>
 
 In this case myenv is something you can specify but env.yml is the file located in the root directory of this project. 
+
+In addition to this you will need to request your own keys from finhub.io and alphavantage and place them into the servers config file. Without these the process will fail.
 
 The following two commands will provide help and instructions that specify how the command parameters available on startup of the two scripts provided for starting up the server and client.
 
