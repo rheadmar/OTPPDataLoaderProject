@@ -45,12 +45,17 @@ class Manager():
             
         
     def reset(self):
-        self.__init__(self.stparams)
-        return json.dumps("0")
+        try:
+            self.__init__(self.stparams)
+            return json.dumps(0)
+        except:
+            return json.dumps(1)
     
     def addTicker(self, ticker):
         try:
             if ticker in self.dataHandlers.keys():
+                return json.dumps(1)
+            if len(self.dataHandlers.keys())>=3:
                 return json.dumps(1)
             self.conf.tickers.append(ticker)
             self.dataHandlers[ticker]=dataHandler(ticker,self.conf,self.ts)
