@@ -13,10 +13,16 @@ def main(arguments):
 	print(client_args)
 	uri = uri = "ws://"+client_args['serverAdd']
 	if "price" in client_args.keys():
-		reqtime = datetime.datetime.strptime(client_args["price"],"%Y-%m-%d-%H:%M")
+		if client_args["price"] == "now":
+			reqtime = datetime.datetime.now()
+		else:
+			reqtime = datetime.datetime.strptime(client_args["price"],"%Y-%m-%d-%H:%M")
 		req = json.dumps({'action' : 'getPrices', 'date' : reqtime.strftime("%Y/%m/%d %H:%M:%S.%f")})
 	elif "signals" in client_args.keys():
-		reqtime = datetime.datetime.strptime(client_args["signals"],"%Y-%m-%d-%H:%M")
+		if client_args["signals"] == "now":
+			reqtime = datetime.datetime.now()
+		else:
+			reqtime = datetime.datetime.strptime(client_args["signals"],"%Y-%m-%d-%H:%M")
 		req = json.dumps({'action' : 'getSignals', 'date' : reqtime.strftime("%Y/%m/%d %H:%M:%S.%f")})
 	elif "delticker" in client_args.keys():
 		req = json.dumps({'action' : 'delTicker', 'ticker' : client_args["delticker"]})
